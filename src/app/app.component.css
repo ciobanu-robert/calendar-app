@@ -1,22 +1,28 @@
-.options {
+.calendar {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: space-between;
+    background-color: rgb(197, 209, 233);
 }
 
 .expansion-panel {
-    z-index: 1;
     padding: 0.5em;
-    position: absolute;
 }
 
 .panel {
     width: 290px;
 }
 
-.datepicker {
-    z-index: 0;
-    margin-top: 70px;
+.dateselector {
     width: 290px;
     padding: 0.5em;
+}
+
+.hour-table{
+    border-left: 1px solid rgb(163, 163, 163);
+    width: 100%;
+}
+
+.hour-table tr:hover:not(.header) {
+    background-color: rgb(197,202,233);
 }

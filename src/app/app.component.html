@@ -1,21 +1,36 @@
-<div class="options">
-    <div class="expansion-panel">
-        <mat-accordion>
-            <mat-expansion-panel class="panel">
-                <mat-expansion-panel-header>
-                    <mat-panel-title>
-                        Add appointment
-                    </mat-panel-title>
-                </mat-expansion-panel-header>
-                <app-appointment class="appointment"></app-appointment>
-            </mat-expansion-panel>
-        </mat-accordion>
+<div class="calendar">
+    <div class="options">
+        <div class="expansion-panel">
+            <mat-accordion>
+                <mat-expansion-panel class="panel">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Add appointment
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <app-appointment class="appointment"></app-appointment>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </div>
+    
+        <div class="dateselector">
+            <app-dateselect></app-dateselect>
+        </div>
     </div>
-
-    <div class="datepicker">
-        <app-dateselect></app-dateselect>
+    <div class="hour-table">
+        <table mat-table [dataSource]="dataSource">
+            <tr class="header" mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    
+            <ng-container matColumnDef="hour">
+                <th mat-header-cell *matHeaderCellDef>Time</th>
+                <td mat-cell *matCellDef="let element">{{ hourConvert(element.hour) }}</td>
+            </ng-container>
+    
+            <ng-container matColumnDef="appointment">
+                <th mat-header-cell *matHeaderCellDef>Appointmnets</th>
+                <td mat-cell *matCellDef="let element">{{ element.appointment }}</td>
+            </ng-container>
+        </table>
     </div>
-</div>
-<div>
-
 </div>
