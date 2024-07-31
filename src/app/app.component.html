@@ -8,19 +8,32 @@
                             Add appointment
                         </mat-panel-title>
                     </mat-expansion-panel-header>
-                    <app-appointment class="appointment"></app-appointment>
+                    <app-appointment
+                        class="appointment"
+                        (appointment)="addAppointment($event)"
+                    >
+                    </app-appointment>
                 </mat-expansion-panel>
             </mat-accordion>
         </div>
     
         <div class="dateselector">
-            <app-dateselect></app-dateselect>
+            <app-dateselect (date)="selectDate($event)"></app-dateselect>
         </div>
     </div>
     <div class="hour-table">
         <table mat-table [dataSource]="dataSource">
-            <tr class="header" mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            <tr 
+                class="header" 
+                mat-header-row 
+                *matHeaderRowDef="displayedColumns"
+            >
+            </tr>
+            <tr 
+                mat-row 
+                *matRowDef="let row; columns: displayedColumns;"
+            >
+            </tr>
     
             <ng-container matColumnDef="hour">
                 <th mat-header-cell *matHeaderCellDef>Time</th>
@@ -29,7 +42,34 @@
     
             <ng-container matColumnDef="appointment">
                 <th mat-header-cell *matHeaderCellDef>Appointmnets</th>
-                <td mat-cell *matCellDef="let element">{{ element.appointment }}</td>
+                <td mat-cell *matCellDef="let appointments">
+                    <div 
+                        class="appointments"
+                        *ngFor="let appointment of appointments.appointment"
+                    >
+                        <p>
+                            Title: {{ appointment.title }},
+                            Date: {{ appointment.date }},
+                            Start time: {{appointment.startTime}},
+                            {{ 
+                                appointment.description ? 
+                                "End time: " + appointment.endTime + "," : 
+                                "End time: " + appointment.endTime
+                            }}
+                            {{ 
+                                appointment.description ? 
+                                "Description: " + appointment.description : 
+                                ''
+                            }}
+                        </p>
+                        <button 
+                            class="delete-button" 
+                            (click)="deleteAppoinment(appointment)"
+                        >
+                            X
+                        </button>
+                    </div>
+                </td>
             </ng-container>
         </table>
     </div>

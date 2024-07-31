@@ -6,6 +6,8 @@ import { MatExpansionModule } from "@angular/material/expansion";
 import { MatPaginatorModule } from "@angular/material/paginator";
 import { DateselectComponent } from './date/dateselect/dateselect.component';
 import {MatTableModule} from '@angular/material/table';
+import { HOURS_DATA } from './data/hour-data';
+import { IAppointment } from './interfaces/appointment';
 
 @Component({
   selector: 'app-root',
@@ -23,42 +25,73 @@ import {MatTableModule} from '@angular/material/table';
   styleUrl: './app.component.css',
 })
 export class AppComponent {
-  HOURS_DATA = [
-    {hour: 0, appointment: []},
-    {hour: 1, appointment: []},
-    {hour: 2, appointment: []},
-    {hour: 3, appointment: []},
-    {hour: 4, appointment: []},
-    {hour: 5, appointment: []},
-    {hour: 6, appointment: []},
-    {hour: 7, appointment: []},
-    {hour: 8, appointment: []},
-    {hour: 9, appointment: []},
-    {hour: 10, appointment: []},
-    {hour: 11, appointment: []},
-    {hour: 12, appointment: []},
-    {hour: 13, appointment: []},
-    {hour: 14, appointment: []},
-    {hour: 15, appointment: []},
-    {hour: 16, appointment: []},
-    {hour: 17, appointment: []},
-    {hour: 18, appointment: []},
-    {hour: 19, appointment: []},
-    {hour: 20, appointment: []},
-    {hour: 21, appointment: []},
-    {hour: 22, appointment: []},
-    {hour: 23, appointment: []},
-    {hour: 24, appointment: []},
-  ];
-
   displayedColumns: string[] = ['hour','appointment'];
-  dataSource = this.HOURS_DATA;
+  dataSource = HOURS_DATA;
+  date = new Date().toLocaleDateString();
+  APPOINTMENT_DATA: IAppointment[] = [
+    {
+      title: 'sada2s',
+      date: '7/31/2024',
+      startTime: '0:00',
+      endTime: '12:00',
+    },
+    {
+      title: 'sadas',
+      date: '7/12/2024',
+      startTime: '2:00',
+      endTime: '11:00',
+    },
+    {
+      title: 'sadas',
+      date: '7/12/2024',
+      startTime: '2:00',
+      endTime: '11:00',
+      description: 'asdsadsafdsfsdfdsdfs'
+    },
+  ];
 
   hourConvert(element:number) {
     if(element <= 12) {
-      return `${ element }:00 AM`
+      return `${ element }:00 AM`;
     } else {
-      return `${ element - 12 }:00 PM`
+      return `${ element - 12 }:00 PM`;
     }
+  }
+
+  addAppointment(appointment: IAppointment) {
+    this.APPOINTMENT_DATA.push(appointment);
+    this.update()
+  }
+
+  selectDate(selectDate: string) {
+    this.date = selectDate;
+    this.update();
+  }
+
+  deleteAppoinment(appointment: IAppointment) {
+    this.APPOINTMENT_DATA = 
+    this.APPOINTMENT_DATA.filter((element) => !(
+          element.title === appointment.title && 
+          element.date === appointment.date && 
+          element.startTime === appointment.startTime && 
+          element.endTime === appointment.endTime && 
+          element.description === appointment.description
+    ));
+
+    this.update();
+  }
+
+  update() {
+    this.dataSource = this.dataSource.map(obj => ({
+      ...obj,
+      appointment: []
+    }))
+    this.APPOINTMENT_DATA.forEach((appointment) => {
+      if (appointment.date === this.date) {
+        let startTime =  appointment.startTime.split(':');
+        let startHour = Number(startTime[0]);
+        this.dataSource[startHour].appointment.push(appointment);
+      }
+    });
   }
 }

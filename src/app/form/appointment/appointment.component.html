@@ -2,12 +2,16 @@
     <form class="form">
         <mat-form-field class="title input">
             <mat-label>Appointment title</mat-label>
-            <input matInput>
+            <input matInput #title>
         </mat-form-field>
 
         <mat-form-field class="datepicker input">
             <mat-label>Choose a date</mat-label>
-            <input matInput [matDatepicker]="picker">
+            <input 
+                matInput 
+                [matDatepicker]="picker" 
+                #date
+            >
             <mat-hint>DD/MM/YYYY</mat-hint>
             <mat-datepicker-toggle matIconSuffix [for]="picker">
             </mat-datepicker-toggle>
@@ -17,20 +21,30 @@
         <div class="time-period input">
             <mat-form-field class="start-time time">
                 <mat-label>Start time</mat-label>
-                <input matInput type="time">
+                <input matInput type="time" #startTime>
             </mat-form-field>
             <mat-form-field class="end-time time">
                 <mat-label>End time</mat-label>
-                <input matInput type="time">
+                <input matInput type="time" #endTime>
             </mat-form-field>
         </div>
 
         <mat-form-field class="description input">
             <mat-label>Description</mat-label>
-            <textarea matInput></textarea>
+            <textarea matInput #description></textarea>
         </mat-form-field>
 
-        <button class="button" mat-raised-button>
+        <button 
+            class="button" 
+            mat-raised-button
+            (click)="addAppointment(
+                title.value, 
+                date.value, 
+                startTime.value, 
+                endTime.value, 
+                description.value
+            )"
+        >
             Add
         </button>
     </form>
