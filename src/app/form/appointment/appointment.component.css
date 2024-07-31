@@ -1,0 +1,15 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: rgb(228, 228, 228);
+}
+
+.input {
+    width: 200px;
+    padding: 1em;
+}
+
+.time {
+    width: 100px;
+}
