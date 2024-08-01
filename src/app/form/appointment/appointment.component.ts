@@ -4,7 +4,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-appointment',
@@ -18,6 +18,7 @@ import { FormsModule } from '@angular/forms';
     MatDatepickerModule,
     MatButtonModule,
     FormsModule,
+    ReactiveFormsModule,
   ],
   templateUrl: './appointment.component.html',
   styleUrl: './appointment.component.css'
@@ -27,20 +28,21 @@ export class AppointmentComponent {
 
   date = model<Date>(new Date);
 
-
-  addAppointment(
-    title: string, 
-    date: string, 
-    startTime: string, 
-    endTime: string, 
-    description: string
-  ) {
+  credentials = {
+    title: '',
+    date: '',
+    startTime: '',
+    endTime: '',
+    description: '',
+  }
+  addAppointment() {
     let appointment = {      
-      title,
-      date,
-      startTime,
-      endTime,
-      description}
+      title: this.credentials.title,
+      date: this.credentials.date,
+      startTime: this.credentials.startTime,
+      endTime: this.credentials.endTime,
+      description: this.credentials.description
+    }
 
     this.appointment.emit(appointment);
   }

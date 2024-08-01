@@ -8,6 +8,14 @@ import { DateselectComponent } from './date/dateselect/dateselect.component';
 import {MatTableModule} from '@angular/material/table';
 import { HOURS_DATA } from './data/hour-data';
 import { IAppointment } from './interfaces/appointment';
+import {
+  CdkDrag,
+  CdkDragDrop,
+  CdkDropList,
+  CdkDropListGroup,
+  moveItemInArray,
+  transferArrayItem,
+} from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-root',
@@ -20,6 +28,9 @@ import { IAppointment } from './interfaces/appointment';
     MatPaginatorModule,
     DateselectComponent,
     MatTableModule,
+    CdkDropListGroup, 
+    CdkDropList, 
+    CdkDrag
 ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
@@ -28,27 +39,7 @@ export class AppComponent {
   displayedColumns: string[] = ['hour','appointment'];
   dataSource = HOURS_DATA;
   date = new Date().toLocaleDateString();
-  APPOINTMENT_DATA: IAppointment[] = [
-    {
-      title: 'sada2s',
-      date: '7/31/2024',
-      startTime: '0:00',
-      endTime: '12:00',
-    },
-    {
-      title: 'sadas',
-      date: '7/12/2024',
-      startTime: '2:00',
-      endTime: '11:00',
-    },
-    {
-      title: 'sadas',
-      date: '7/12/2024',
-      startTime: '2:00',
-      endTime: '11:00',
-      description: 'asdsadsafdsfsdfdsdfs'
-    },
-  ];
+  APPOINTMENT_DATA: IAppointment[] = [];
 
   hourConvert(element:number) {
     if(element <= 12) {
@@ -68,24 +59,39 @@ export class AppComponent {
     this.update();
   }
 
-  deleteAppoinment(appointment: IAppointment) {
+  deleteAppoinment(appointment: IAppointment, update:boolean) {
     this.APPOINTMENT_DATA = 
     this.APPOINTMENT_DATA.filter((element) => !(
-          element.title === appointment.title && 
-          element.date === appointment.date && 
-          element.startTime === appointment.startTime && 
-          element.endTime === appointment.endTime && 
-          element.description === appointment.description
+          element === appointment
     ));
 
-    this.update();
+    if (update) {
+      this.update();
+    }
+  }
+
+  drop(event: CdkDragDrop<any>) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex,
+      );
+    } else {
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex,
+      );
+    }
   }
 
   update() {
     this.dataSource = this.dataSource.map(obj => ({
       ...obj,
       appointment: []
-    }))
+    }));
     this.APPOINTMENT_DATA.forEach((appointment) => {
       if (appointment.date === this.date) {
         let startTime =  appointment.startTime.split(':');

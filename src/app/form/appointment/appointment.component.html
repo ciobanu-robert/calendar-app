@@ -1,49 +1,73 @@
 <div class="appointment">
-    <form class="form">
+    <form 
+        class="form" 
+        #appointment="ngForm"
+        (ngSubmit)="addAppointment()"
+        >
         <mat-form-field class="title input">
             <mat-label>Appointment title</mat-label>
-            <input matInput #title>
+            <input 
+                matInput 
+                [(ngModel)]="credentials.title"
+                name="title"
+                required="true"
+                minlength="3"
+            >
         </mat-form-field>
 
         <mat-form-field class="datepicker input">
             <mat-label>Choose a date</mat-label>
             <input 
                 matInput 
+                disabled
+                [(ngModel)]="credentials.date"
+                name="date"
                 [matDatepicker]="picker" 
-                #date
+                required
             >
             <mat-hint>DD/MM/YYYY</mat-hint>
             <mat-datepicker-toggle matIconSuffix [for]="picker">
             </mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
+            <mat-datepicker #picker disabled="false"></mat-datepicker>
         </mat-form-field>
 
         <div class="time-period input">
             <mat-form-field class="start-time time">
                 <mat-label>Start time</mat-label>
-                <input matInput type="time" #startTime>
+                <input 
+                    matInput 
+                    type="time" 
+                    [(ngModel)]="credentials.startTime"
+                    name="startTime"
+                    required
+                >
             </mat-form-field>
             <mat-form-field class="end-time time">
                 <mat-label>End time</mat-label>
-                <input matInput type="time" #endTime>
+                <input 
+                    matInput 
+                    type="time" 
+                    [(ngModel)]="credentials.endTime"
+                    name="endTime"
+                    required
+                >
             </mat-form-field>
         </div>
 
         <mat-form-field class="description input">
             <mat-label>Description</mat-label>
-            <textarea matInput #description></textarea>
+            <textarea 
+                matInput 
+                [(ngModel)]="credentials.date"
+                name="date"
+            >
+            </textarea>
         </mat-form-field>
 
         <button 
+            [disabled]="appointment.invalid"
             class="button" 
             mat-raised-button
-            (click)="addAppointment(
-                title.value, 
-                date.value, 
-                startTime.value, 
-                endTime.value, 
-                description.value
-            )"
         >
             Add
         </button>

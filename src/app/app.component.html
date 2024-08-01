@@ -42,34 +42,46 @@
     
             <ng-container matColumnDef="appointment">
                 <th mat-header-cell *matHeaderCellDef>Appointmnets</th>
-                <td mat-cell *matCellDef="let appointments">
-                    <div 
-                        class="appointments"
-                        *ngFor="let appointment of appointments.appointment"
+                <div cdkDropListGroup>
+                    <td 
+                        class="appointments-columns"
+                        mat-cell 
+                        *matCellDef="let appointments"
+                        cdkDropList
+                        [cdkDropListData]="appointments.appointment"
+                        (cdkDropListDropped)="drop($event)"
                     >
-                        <p>
-                            Title: {{ appointment.title }},
-                            Date: {{ appointment.date }},
-                            Start time: {{appointment.startTime}},
-                            {{ 
-                                appointment.description ? 
-                                "End time: " + appointment.endTime + "," : 
-                                "End time: " + appointment.endTime
-                            }}
-                            {{ 
-                                appointment.description ? 
-                                "Description: " + appointment.description : 
-                                ''
-                            }}
-                        </p>
-                        <button 
-                            class="delete-button" 
-                            (click)="deleteAppoinment(appointment)"
-                        >
-                            X
-                        </button>
-                    </div>
-                </td>
+                        @for (appointment of appointments.appointment; track appointment) {
+                            <div 
+                                class="appointments"
+                                cdkDrag
+                            >
+                                <p>
+                                    Title: {{ appointment.title }},
+                                    Date: {{ appointment.date }},
+                                    Start time: {{appointment.startTime}},
+                                    {{ 
+                                        appointment.description ? 
+                                        "End time: " + appointment.endTime + "," : 
+                                        "End time: " + appointment.endTime
+                                    }}
+                                    {{ 
+                                        appointment.description ? 
+                                        "Description: " + appointment.description : 
+                                        ''
+                                    }}
+                                </p>
+                                
+                                <button 
+                                    class="delete-button" 
+                                    (click)="deleteAppoinment(appointment, true)"
+                                >
+                                    X
+                                </button>
+                            </div>
+                        }
+                    </td>
+                </div>
             </ng-container>
         </table>
     </div>
