@@ -39,6 +39,7 @@ export class AppComponent {
   displayedColumns: string[] = ['hour','appointment'];
   dataSource = HOURS_DATA;
   date = new Date().toLocaleDateString();
+  selectedDate = new Date(this.date);
   APPOINTMENT_DATA: IAppointment[] = [];
 
   hourConvert(element:number) {
@@ -51,12 +52,13 @@ export class AppComponent {
 
   addAppointment(appointment: IAppointment) {
     this.APPOINTMENT_DATA.push(appointment);
-    console.log(this.APPOINTMENT_DATA)
-    this.update()
+    this.selectDate(appointment.date);
+    this.update();
   }
 
   selectDate(selectDate: string) {
     this.date = selectDate;
+    this.selectedDate = new Date(this.date);
     this.update();
   }
 

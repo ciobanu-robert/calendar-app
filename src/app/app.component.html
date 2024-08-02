@@ -18,7 +18,10 @@
         </div>
     
         <div class="dateselector">
-            <app-dateselect (date)="selectDate($event)"></app-dateselect>
+            <app-dateselect 
+                [(selected)]="selectedDate"
+                (date)="selectDate($event)"
+            ></app-dateselect>
         </div>
     </div>
     <div class="hour-table">

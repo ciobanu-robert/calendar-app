@@ -2,7 +2,7 @@
     <form 
         class="form" 
         #appointment="ngForm"
-        (ngSubmit)="addAppointment()"
+        (ngSubmit)="addAppointment(); appointment.resetForm()"
         >
         <mat-form-field class="title input">
             <mat-label>Appointment title</mat-label>
@@ -20,7 +20,7 @@
             <input 
                 matInput 
                 disabled
-                [(ngModel)]="date"
+                [(ngModel)]="credentials.date"
                 name="date"
                 [matDatepicker]="picker" 
                 required
