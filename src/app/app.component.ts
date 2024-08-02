@@ -51,6 +51,7 @@ export class AppComponent {
 
   addAppointment(appointment: IAppointment) {
     this.APPOINTMENT_DATA.push(appointment);
+    console.log(this.APPOINTMENT_DATA)
     this.update()
   }
 
@@ -70,7 +71,7 @@ export class AppComponent {
     }
   }
 
-  drop(event: CdkDragDrop<any>) {
+  drop(event: CdkDragDrop<IAppointment[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(
         event.container.data,

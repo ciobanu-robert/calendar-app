@@ -26,19 +26,19 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 export class AppointmentComponent {
   @Output() appointment = new EventEmitter<any>();
 
-  date = model<Date>(new Date);
+  date = model<Date>(new Date())
 
   credentials = {
     title: '',
-    date: '',
     startTime: '',
     endTime: '',
     description: '',
   }
+  
   addAppointment() {
     let appointment = {      
       title: this.credentials.title,
-      date: this.credentials.date,
+      date: this.date().toLocaleDateString(),
       startTime: this.credentials.startTime,
       endTime: this.credentials.endTime,
       description: this.credentials.description

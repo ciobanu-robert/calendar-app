@@ -20,7 +20,7 @@
             <input 
                 matInput 
                 disabled
-                [(ngModel)]="credentials.date"
+                [(ngModel)]="date"
                 name="date"
                 [matDatepicker]="picker" 
                 required
@@ -58,8 +58,8 @@
             <mat-label>Description</mat-label>
             <textarea 
                 matInput 
-                [(ngModel)]="credentials.date"
-                name="date"
+                [(ngModel)]="credentials.description"
+                name="description"
             >
             </textarea>
         </mat-form-field>
