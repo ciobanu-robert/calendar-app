@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
 import { AppointmentComponent } from "./form/appointment/appointment.component";
 import { MatExpansionModule } from "@angular/material/expansion";
 import { MatPaginatorModule } from "@angular/material/paginator";
@@ -8,6 +7,7 @@ import { DateselectComponent } from './date/dateselect/dateselect.component';
 import {MatTableModule} from '@angular/material/table';
 import { HOURS_DATA } from './data/hour-data';
 import { IAppointment } from './interfaces/appointment';
+
 import {
   CdkDrag,
   CdkDragDrop,
@@ -22,7 +22,6 @@ import {
   standalone: true,
   imports: [
     CommonModule,
-    RouterOutlet,
     AppointmentComponent,
     MatExpansionModule,
     MatPaginatorModule,
@@ -30,7 +29,7 @@ import {
     MatTableModule,
     CdkDropListGroup, 
     CdkDropList, 
-    CdkDrag
+    CdkDrag,
 ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
